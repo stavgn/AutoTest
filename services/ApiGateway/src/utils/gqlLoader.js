@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
-const loadGQLFile = (type) => {
-    const filePath = path.join(path.resolve(), '../modules', type)
+const loadGQLFile = (filePath) => {
+    if (!fs.existsSync(filePath)) {
+        return {}
+    }
     return fs.readFileSync(filePath, 'utf-8')
 }
 

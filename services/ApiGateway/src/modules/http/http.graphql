@@ -1,0 +1,15 @@
+interface HTTPSchema {
+    headers: [Headers]!
+    body: String
+}
+
+type HTTPRequest implements HTTPSchema {
+    headers: [Headers]!
+    body: String  
+}
+
+type HTTPResponse implements HTTPSchema {
+    headers: [Headers]!
+    status: Int!
+    body: String  
+}

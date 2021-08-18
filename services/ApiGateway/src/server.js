@@ -31,19 +31,20 @@ if (cluster.isPrimary && !isDevEnv) {
         return resolve();
     }
 
+    const typeDefs = [`
+    type Query {
+      hello(name: String): String!
+    }
+  `]
+
     const resolvers = {
         Query: {
             hello: (_, { name }) => `Hello ${name || 'World'}`,
         },
     }
-    const typeDefs = [`
-        type Query {
-            hello(name: String): String!
-        }`]
+
     const services = {}
     const loaders = {}
-
-    logger.info(fs.readdirSync('./src/modules'))
 
     const modules = fs.readdirSync('./src/modules')
         .filter(file => (file.indexOf('.') !== 0))
@@ -51,7 +52,6 @@ if (cluster.isPrimary && !isDevEnv) {
 
 
     Promise.all(modules).then((modules) => {
-        logger.info(modules)
         modules.forEach(({ module, default: lib }) => {
             typeDefs.push(lib.typeDefs)
             _.merge(resolvers, lib.resolvers)
@@ -63,16 +63,16 @@ if (cluster.isPrimary && !isDevEnv) {
 
 
         const server = new GraphQLServer({
-            typeDefs,
+            typeDefs: typeDefs.join(' '),
             resolvers: _.merge({}, resolvers),
+            resolverValidationOptions: {
+                requireResolversForResolveType: false
+            },
             context: async (context) => {
                 const req = context.request;
                 return {
                     services,
-                    loaders: Object.keys(loaders).reduce((acc, next) => {
-                        acc[next] = loaders[next];
-                        return acc;
-                    }, {}),
+                    loaders,
                     start: new Date().getTime(),
                     req
                 }

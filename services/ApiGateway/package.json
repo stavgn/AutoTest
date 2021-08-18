@@ -8,6 +8,7 @@
     "dev": "NODE_ENV=development nodemon src/server"
   },
   "dependencies": {
+    "graphql-type-json": "^0.3.2",
     "graphql-yoga": "^1.18.3",
     "lodash": "^4.17.21",
     "winston": "^3.3.3"

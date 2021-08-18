@@ -1,14 +1,44 @@
 import path from 'path'
 import fs from 'fs'
-import logger from './logger.js';
+import gqlLoader from './gqlLoader.js'
+
+const suffixes = [
+    '.graphql',
+    '.resolvers.js',
+    '.services.js',
+    '.loaders.js'
+];
+
+const safeImport = (path) => {
+    if (!fs.existsSync(path)) {
+        return Promise.resolve({})
+    }
+    return import(path);
+}
+
+const getPath = (module, suffix = '.js') => path.join(path.resolve(), `src/modules/${module}/${module}${suffix}`)
+
+const execSubImports = async (module, suffixes) => {
+    const typeDefs = gqlLoader(getPath(module, suffixes[0]))
+    const { default: resolvers = {} } = await safeImport(getPath(module, suffixes[1]))
+    const { default: services = {} } = await safeImport(getPath(module, suffixes[2]))
+    const { default: loaders = {} } = await safeImport(getPath(module, suffixes[3]))
+
+    return {
+        typeDefs,
+        resolvers,
+        services,
+        loaders
+    }
+}
 
 export default async (module) => {
-    const index = path.join(path.resolve(), `src/modules/${module}/index.js`)
+    const index = getPath(module)
     if (!fs.existsSync(index)) {
-        return Promise.resolve({});
+        const lib = await execSubImports(module, suffixes);
+        return { module, default: lib };
     }
 
     const lib = await import(index);
-    logger.info('asdfghjkgcfxdoirtcjm', lib)
     return { module, default: lib.default };
 }

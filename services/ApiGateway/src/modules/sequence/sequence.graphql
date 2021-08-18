@@ -1,0 +1,10 @@
+type Flow {
+    id: ID!
+    user: User!
+    sessionId: String!
+    location: String!
+    endpoint: String!
+    timestamp: DateTime
+    request: HTTPRequest
+    response: HTTPResponse
+}
