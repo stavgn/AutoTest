@@ -8,6 +8,8 @@
     "dev": "NODE_ENV=development nodemon src/server"
   },
   "dependencies": {
+    "@autotest/config": "file:../../packages/autoTestConfig",
+    "axios": "^0.21.1",
     "graphql-type-json": "^0.3.2",
     "graphql-yoga": "^1.18.3",
     "lodash": "^4.17.21",
