@@ -17,5 +17,4 @@ const env = () => ENV
 export default {
     get,
     env,
-    isOn
 }

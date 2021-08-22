@@ -1,4 +1,4 @@
-type Flow {
+type Sequence {
     id: ID!
     user: User!
     sessionId: String!

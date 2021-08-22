@@ -1,0 +1,13 @@
+type Flow {
+    id: ID!
+    baseUrl: String!
+    sequences: [Sequence]
+}
+
+type Query {
+    getFlowById(id: ID!): Flow
+}
+
+type Mutation {
+    createFlow: Flow
+}

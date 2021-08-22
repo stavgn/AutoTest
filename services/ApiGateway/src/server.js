@@ -1,5 +1,4 @@
 import cluster from 'cluster'
-import path from 'path'
 import { cpus } from 'os'
 import fs from 'fs'
 import _ from 'lodash'
@@ -31,18 +30,8 @@ if (cluster.isPrimary && !isDevEnv) {
         return resolve();
     }
 
-    const typeDefs = [`
-    type Query {
-      hello(name: String): String!
-    }
-  `]
-
-    const resolvers = {
-        Query: {
-            hello: (_, { name }) => `Hello ${name || 'World'}`,
-        },
-    }
-
+    const typeDefs = []
+    const resolvers = { Query: {} }
     const services = {}
     const loaders = {}
 
@@ -55,7 +44,7 @@ if (cluster.isPrimary && !isDevEnv) {
         modules.forEach(({ module, default: lib }) => {
             typeDefs.push(lib.typeDefs)
             _.merge(resolvers, lib.resolvers)
-            services[module] = lib.service
+            services[module] = lib.services
             if (lib.loaders) {
                 loaders[module] = lib.loaders
             }
