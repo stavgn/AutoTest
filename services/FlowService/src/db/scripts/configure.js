@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb'
 import autoTstConfig from '@autotest/config'
 import Flow from '../schema/Flow.js'
+import Sequence from '../schema/Sequence.js'
 import logger from '../../utils/logger.js'
 
 
@@ -14,11 +15,10 @@ async function configure() {
     const uri = `mongodb://${auth}${cluster}`;
     const client = new MongoClient(uri);
     try {
-
         await client.connect();
         const db = client.db(dbName);
         await db.createCollection('flow', { validator: Flow })
-        await db.createCollection('seqeunce')
+        await db.createCollection('seqeunce', { validator: Sequence })
         logger.info('MongoDb Successfully Configured!')
     }
     finally {

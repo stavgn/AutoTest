@@ -1,7 +1,7 @@
 type Sequence {
     id: ID!
     user: User!
-    sessionId: String!
+    flowId: String!
     location: String!
     endpoint: String!
     timestamp: DateTime

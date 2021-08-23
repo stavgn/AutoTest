@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server",
-    "config": "NODE_ENV=development nodemon src/db/scripts/configure",
-    "drop": "NODE_ENV=development nodemon src/db/scripts/drop"
+    "db:config": "NODE_ENV=development nodemon src/db/scripts/configure",
+    "db:drop": "NODE_ENV=development nodemon src/db/scripts/drop"
   },
   "dependencies": {
     "@autotest/config": "file:../../packages/autoTestConfig",
