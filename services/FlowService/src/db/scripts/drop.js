@@ -1,6 +1,5 @@
 import { MongoClient } from 'mongodb'
 import autoTstConfig from '@autotest/config'
-import Flow from '../schema/Flow.js'
 import logger from '../../utils/logger.js'
 
 
@@ -10,22 +9,28 @@ const cluster = autoTstConfig.get('MONGO_CLUSTER_URL');
 const auth = username && password && `${username}:${password}@`;
 const dbName = 'flow';
 
-async function configure() {
+async function dropDatabase() {
     const uri = `mongodb://${auth}${cluster}`;
     const client = new MongoClient(uri);
     try {
 
         await client.connect();
         const db = client.db(dbName);
-        await db.createCollection('flow', { validator: Flow })
-        await db.createCollection('seqeunce')
-        logger.info('MongoDb Successfully Configured!')
+        await db.dropDatabase()
+        logger.info('MongoDb Successfully Removed!')
     }
     finally {
         client.close()
     }
 }
 
-configure().catch((err) => logger.error(err, err))
+/**
+ * CAUTION! Commented for Safety!
+ * Uncomment when willing to run.
+ */
+
+// dropDatabase().catch((err) => logger.error(err, err))
+
+
 
 

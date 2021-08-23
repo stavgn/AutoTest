@@ -2,15 +2,12 @@ import express from 'express'
 import fs from 'fs'
 import Database from './db/db.js'
 import importRoute from './utils/importRoutes.js'
-
+import logger from './utils/logger.js'
+import erorrHandler from './middlewares/errorHandler.js'
 const app = express()
 await Database.connect()
 
 app.use(express.json())
-app.use((req, res, next) => {
-    re.db = Database
-    next()
-})
 
 const routes = fs.readdirSync('./src/modules')
     .filter(file => (file.indexOf('.') !== 0))
@@ -18,7 +15,10 @@ const routes = fs.readdirSync('./src/modules')
 
 Promise.all(routes).then((routes) => {
     routes.forEach(({ module, router }) => {
-        app.use(`/${module}`, router)
+        app.use(`/${module}`, router, erorrHandler)
     });
 })
 
+app.listen(process.env.PORT || 8080, () => {
+    logger.info(`Flow Service is listening at http://localhost:${process.env.PORT || 8080}`)
+})
