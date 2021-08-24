@@ -1,13 +1,13 @@
 type Flow {
-    id: ID!
+    _id: ID!
     baseUrl: String!
     sequences: [Sequence]
 }
 
-type Query {
+extend type Query {
     getFlowById(id: ID!): Flow
 }
 
-type Mutation {
-    createFlow: Flow
+extend type Mutation {
+    createFlow(baseUrl: String!): Flow
 }

@@ -13,3 +13,14 @@ type HTTPResponse implements HTTPSchema {
     status: Int!
     body: String  
 }
+
+input HTTPRequestInput {
+    headers: [HeadersInput]!
+    body: String    
+}
+
+input HTTPResponseInput {
+    headers: [HeadersInput]!
+    status: Int!
+    body: String     
+}

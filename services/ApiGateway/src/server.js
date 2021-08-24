@@ -50,7 +50,6 @@ if (cluster.isPrimary && !isDevEnv) {
             }
         });
 
-
         const server = new GraphQLServer({
             typeDefs: typeDefs.join(' '),
             resolvers: _.merge({}, resolvers),
