@@ -1,12 +1,10 @@
 
-const getFlowById = async (_, args, ctx) => {
-    return {
-        id: 'id'
-    }
+const getFlowById = async (_, args, { services }) => {
+    return services.flow.getFlowById(args.id)
 }
 
 const createFlow = async (_, args, { services }) => {
-    const flow = await services.flow.createFlow();
+    const flow = await services.flow.createFlow(args);
 
     if (!flow) {
         throw new Error('flow not created')

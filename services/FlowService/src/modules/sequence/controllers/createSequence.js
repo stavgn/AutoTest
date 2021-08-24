@@ -6,7 +6,7 @@ import db from '../../../db/db.js'
 const handler = async (req, res) => {
     const sequence = await db("sequence").insertOne(req.body)
     res.status(201)
-        .json(sequence);
+        .json({ id: sequence.insertedId });
 }
 
 const validations = {
