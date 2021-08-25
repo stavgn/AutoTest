@@ -4,7 +4,7 @@ type Sequence {
     flowId: String!
     location: String!
     endpoint: String!
-    timestamp: DateTime
+    timestamp: DateTime!
     request: HTTPRequest
     response: HTTPResponse
 }
@@ -15,6 +15,7 @@ extend type Query {
 
 extend type Mutation {
     createSequence(input: createSequenceInput) : Sequence
+    updateSequenceById(input: updateSequenceInput): Sequence
 }
 
 input createSequenceInput {
@@ -22,7 +23,13 @@ input createSequenceInput {
     flowId: String!
     location: String!
     endpoint: String!
-    timestamp: DateTime
+    timestamp: DateTime!
     request: HTTPRequestInput
     response: HTTPResponseInput   
+}
+
+input updateSequenceInput {
+    _id: ID!
+    request: HTTPRequestInput
+    response: HTTPResponseInput      
 }
