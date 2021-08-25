@@ -6,7 +6,6 @@ import { ObjectId } from 'mongodb'
 
 const handler = async (req, res) => {
     const flow = await db("flow").findOne({ _id: ObjectId(req.params.id) })
-    console.log(flow)
     res.status(200)
         .json(flow);
 }

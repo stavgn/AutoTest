@@ -1,0 +1,9 @@
+{
+  "name": "@autotest/queuemanager",
+  "version": "1.0.0",
+  "main": "server.py",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec python3.9 src/server.py"
+  }
+}
