@@ -1,10 +1,10 @@
 import Joi from 'joi'
 import validator from '../../../middlewares/validator.js';
 import errorWrapper from '../../../middlewares/errorWrapper.js';
-import db from '../../../db/db.js'
+import { createSequence } from '../../../services/sequence.services.js';
 
 const handler = async (req, res) => {
-    const sequence = await db("sequence").insertOne(req.body)
+    const sequence = await createSequence(req.body)
     res.status(201)
         .json({ id: sequence.insertedId });
 }

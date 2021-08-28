@@ -1,11 +1,10 @@
 import Joi from 'joi'
 import validator from '../../../middlewares/validator.js';
 import errorWrapper from '../../../middlewares/errorWrapper.js';
-import db from '../../../db/db.js'
-import { ObjectId } from 'mongodb'
+import { getSequenceById } from '../../../services/sequence.services.js';
 
 const handler = async (req, res) => {
-    const sequence = await db("sequence").findOne({ _id: ObjectId(req.params.id) })
+    const sequence = await getSequenceById(req.params.id)
     res.status(200)
         .json(sequence);
 }
