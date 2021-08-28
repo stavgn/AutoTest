@@ -4,6 +4,6 @@
   "main": "server.py",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec python3.9 src/server.py"
+    "dev": "nodemon --exec python3.7 src/server.py"
   }
 }
