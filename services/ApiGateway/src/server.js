@@ -2,7 +2,9 @@ import cluster from 'cluster'
 import { cpus } from 'os'
 import fs from 'fs'
 import _ from 'lodash'
+import { createProxyMiddleware } from 'http-proxy-middleware'
 import { GraphQLServer } from 'graphql-yoga'
+import autoTstConfig from '@autotest/config'
 import logger from './utils/logger.js'
 import importModule from './utils/importModule.js'
 
@@ -69,6 +71,12 @@ if (cluster.isPrimary && !isDevEnv) {
         })
 
         server.start(serverOptions, ({ port }) => logger.info(`Started on port ${port} , process ${process.pid}`))
+
+        server.express.use('/data', createProxyMiddleware({
+            target: autoTstConfig.get('QUEUE_MNGR_SERVICE'),
+            changeOrigin: true,
+            pathRewrite: { '^/data': '/emit' }
+        }))
 
     }).catch((err) => logger.error(err, err))
 }
