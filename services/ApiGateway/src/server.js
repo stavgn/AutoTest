@@ -21,7 +21,7 @@ if (cluster.isPrimary && !isDevEnv) {
 } else {
 
     const serverOptions = {
-        port: parseInt(process.env.PORT, 10) || 5000,
+        port: parseInt(process.env.PORT, 10) || 4000,
         endpoint: '/graphql',
         playground: '/docs',
         tracing: isDevEnv,
