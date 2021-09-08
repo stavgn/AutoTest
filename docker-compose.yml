@@ -1,0 +1,48 @@
+version: "3.9"
+services: 
+  apigateway:
+    build: "./services/ApiGateway"
+    ports: 
+      - "4000:4000"
+    networks:
+      - local
+    depends_on: 
+      - 'flow'  
+  mongodb:
+    image: mongo
+    ports: 
+      - "27017:27017"
+    networks:
+      - local      
+  flow:
+    build: "./services/FlowService" 
+    ports:
+      - "8080:8080"
+    depends_on:
+      - 'mongodb'
+      - 'rabbitmq'  
+    environment: 
+      - QUEUE_URL=rabbitmq            
+    networks:
+      - local
+  queuemanager:
+    build: "./services/queueManagerService" 
+    ports:
+      - "5000:5000"
+    depends_on:
+      - 'rabbitmq'
+    networks:
+      - local  
+    environment: 
+      - QUEUE_URL=rabbitmq        
+  rabbitmq:
+    image: rabbitmq:management
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - local
+networks:
+  local:
+    driver: bridge
+  

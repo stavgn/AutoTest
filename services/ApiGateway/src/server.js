@@ -9,7 +9,8 @@ import logger from './utils/logger.js'
 import importModule from './utils/importModule.js'
 
 const isDevEnv = !['staging', 'production'].includes(process.env.NODE_ENV)
-
+const host = process.env.HOST || '127.0.0.1'
+const port = process.env.PORT || 8080
 if (cluster.isPrimary && !isDevEnv) {
     logger.info('Master ' + process.pid + ' is running');
     for (let i = 0; i < cpus().length; i++) {
@@ -71,7 +72,6 @@ if (cluster.isPrimary && !isDevEnv) {
         })
 
         server.start(serverOptions, ({ port }) => logger.info(`Started on port ${port} , process ${process.pid}`))
-
         server.express.use('/data', createProxyMiddleware({
             target: autoTstConfig.get('QUEUE_MNGR_SERVICE'),
             changeOrigin: true,

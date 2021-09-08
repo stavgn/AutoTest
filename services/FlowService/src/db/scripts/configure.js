@@ -11,7 +11,7 @@ const cluster = autoTstConfig.get('MONGO_CLUSTER_URL');
 const auth = username && password && `${username}:${password}@`;
 const dbName = 'flow';
 
-async function configure() {
+export async function configure() {
     const uri = `mongodb://${auth}${cluster}`;
     const client = new MongoClient(uri);
     try {
@@ -25,7 +25,5 @@ async function configure() {
         client.close()
     }
 }
-
-configure().catch((err) => logger.error(err, err))
 
 

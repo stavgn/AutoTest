@@ -6,7 +6,7 @@ import { createSequence } from '../../../services/sequence.services.js';
 const handler = async (req, res) => {
     const sequence = await createSequence(req.body)
     res.status(201)
-        .json({ id: sequence.insertedId });
+        .json({ _id: sequence.insertedId });
 }
 
 const validations = {

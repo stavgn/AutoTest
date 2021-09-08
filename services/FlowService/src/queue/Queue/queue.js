@@ -21,8 +21,7 @@ class Queue {
         const handler = _.get(this.tasks, `${type.toLowerCase()}.${method.toLowerCase()}`, async () => { })
         return handler(body)
     }
-
-    async connect() {
+    async attemptConnection() {
         const connection = await amqp.connect(`amqp://${this.queueUrl}`)
         const channel = await connection.createChannel();
         channel.assertQueue(this.queueName, {
@@ -30,6 +29,19 @@ class Queue {
         })
         this.channel = channel;
         logger.info(`Successfully Connected to RabbitMQ ${this.queueUrl}!`)
+    }
+
+    async connect() {
+        try {
+            logger.info(`Attempting Connection to RabbitMQ ${this.queueUrl}!`)
+            await this.attemptConnection()
+        }
+        catch (err) {
+            logger.info(`Could not Connect to RabbitMQ ${this.queueUrl}!`)
+            logger.info(`Reattempting in 5 Seconds...`)
+            await sleep(5000)
+            return this.connect()
+        }
     }
 
     listen() {
@@ -41,6 +53,12 @@ class Queue {
             })
         })
     }
+}
+
+const sleep = (time) => {
+    return new Promise((resolve) => {
+        setTimeout(resolve, time)
+    })
 }
 
 

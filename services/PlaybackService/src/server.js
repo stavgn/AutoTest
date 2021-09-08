@@ -6,10 +6,7 @@ import Database from './db/db.js'
 import importRoute from './utils/importRoutes.js'
 import logger from './utils/logger.js'
 import erorrHandler from './middlewares/errorHandler.js'
-import { configure as mongoConfig } from './db/scripts/configure.js'
 
-const host = process.env.HOST || '0.0.0.0'
-const port = process.env.PORT || 8080
 const app = express()
 await Database.connect()
 
@@ -25,14 +22,7 @@ Promise.all(routes).then((routes) => {
     });
 })
 
-app.get('/config', async (req, res) => {
-    await mongoConfig()
-    res.status(200)
-        .write("Success!")
-        .end()
-})
-
-app.listen(port, host, () => {
+app.listen(process.env.PORT || 8080, () => {
     logger.info(`Flow Service is listening at http://localhost:${process.env.PORT || 8080}`)
 })
 

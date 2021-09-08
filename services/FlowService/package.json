@@ -6,8 +6,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development nodemon src/server",
-    "db:config": "NODE_ENV=development nodemon src/db/scripts/configure",
-    "db:drop": "NODE_ENV=development nodemon src/db/scripts/drop"
+    "staging": "NODE_ENV=staging node src/server",
+    "db:config": "NODE_ENV=development node src/db/scripts/configure.run",
+    "db:drop": "NODE_ENV=development node src/db/scripts/drop"
   },
   "dependencies": {
     "@autotest/config": "file:../../packages/autoTestConfig",
@@ -16,6 +17,7 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "lodash": "^4.17.21",
-    "mongodb": "^4.1.0"
+    "mongodb": "^4.1.0",
+    "winston": "^3.3.3"
   }
 }

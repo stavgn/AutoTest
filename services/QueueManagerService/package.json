@@ -4,6 +4,6 @@
   "main": "server.py",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec python3.7 src/server.py"
+    "dev": "FLASK_ENV=development FLASK_APP=src/server.py FLASK_RUN_HOST=0.0.0.0 flask run"
   }
 }

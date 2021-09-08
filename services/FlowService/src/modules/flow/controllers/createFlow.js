@@ -5,8 +5,9 @@ import { createFlow } from '../../../services/flow.services.js'
 
 const handler = async (req, res) => {
     const flow = await createFlow(req.body)
+    console.log({ flow })
     res.status(201)
-        .json({ id: flow.insertedId });
+        .json({ _id: flow.insertedId });
 }
 
 const validations = {

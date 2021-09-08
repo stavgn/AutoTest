@@ -1,11 +1,12 @@
 {
   "name": "@autotest/apigateway",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon -e js,graphql src/server"
+    "dev": "NODE_ENV=development nodemon -e js,graphql src/server",
+    "staging": "NODE_ENV=staging node src/server"
   },
   "dependencies": {
     "@autotest/config": "file:../../packages/autoTestConfig",
