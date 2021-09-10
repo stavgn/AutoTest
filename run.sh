@@ -8,7 +8,7 @@ for i in "${!SERVICES[@]}"; do
   cp -r ./packages  "${ROOT}/${SERVICES[i]}"
 done
 
-docker compose up --force-recreate --build
+docker compose up #--force-recreate --build
 
 for i in "${!SERVICES[@]}"; do 
   rm -rf "${ROOT}/${SERVICES[i]}/packages"

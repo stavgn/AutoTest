@@ -25,6 +25,12 @@ services:
       - QUEUE_URL=rabbitmq            
     networks:
       - local
+  simulatorbackend:
+    build: "./services/SimulatorBackendService" 
+    ports:
+      - "3001:3001"      
+    networks:
+      - local      
   queuemanager:
     build: "./services/queueManagerService" 
     ports:
