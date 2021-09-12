@@ -1,6 +1,5 @@
 type Sequence {
     _id: ID!
-    user: User!
     flowId: String!
     location: String!
     endpoint: String!

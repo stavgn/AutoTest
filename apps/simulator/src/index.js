@@ -8,8 +8,8 @@ import AutoTest from '@autotest/client'
 import axios from 'axios'
 
 
-const vcr = AutoTest.init('http://autotest.com');
-vcr.record(axios)
+//const vcr = AutoTest.init('http://autotest.com');
+//vcr.record(axios)
 
 ReactDOM.render(
   <React.StrictMode>

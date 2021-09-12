@@ -1,5 +1,6 @@
 type Flow {
     _id: ID!
+    user: User!
     baseUrl: String!
     sequences: [Sequence]
 }

@@ -1,12 +1,8 @@
 export default {
     $jsonSchema: {
         bsonType: "object",
-        required: ["user", "sessionId", "location", "endpoint", "timestamp"],
+        required: ["sessionId", "location", "endpoint", "timestamp"],
         properties: {
-            user: {
-                bsonType: "string",
-                description: "must be a string and is required"
-            },
             flowId: {
                 bsonType: "objectId",
                 description: "must be a objectId and is required"

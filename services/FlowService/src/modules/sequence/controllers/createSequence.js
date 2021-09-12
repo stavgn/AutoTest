@@ -16,6 +16,7 @@ const validations = {
         location: Joi.string().required(),
         endpoint: Joi.string().required(),
         timestamp: Joi.date().required(),
+        _id: Joi.string(),
         request: Joi.object(),
         response: Joi.object(),
     })

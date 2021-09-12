@@ -5,14 +5,14 @@ import { createFlow } from '../../../services/flow.services.js'
 
 const handler = async (req, res) => {
     const flow = await createFlow(req.body)
-    console.log({ flow })
     res.status(201)
         .json({ _id: flow.insertedId });
 }
 
 const validations = {
     body: Joi.object({
-        baseUrl: Joi.string().required()
+        baseUrl: Joi.string().required(),
+        _id: Joi.string()
     })
 }
 
