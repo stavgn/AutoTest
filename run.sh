@@ -1,16 +1,26 @@
 #!/bin/bash
 
-ROOT="./services"
+SERVICES_ROOT="./services"
 SERVICES=("ApiGateway" "FlowService" "QueueManagerService")
 
+APPS_ROOT="./apps"
+APPS=("simulator")
 
 for i in "${!SERVICES[@]}"; do 
-  cp -r ./packages  "${ROOT}/${SERVICES[i]}"
+  cp -r ./packages  "${SERVICES_ROOT}/${SERVICES[i]}"
+done
+
+for i in "${!APPS[@]}"; do 
+  cp -r ./packages  "${APPS_ROOT}/${APPS[i]}"
 done
 
 docker compose up #--force-recreate --build
 
 for i in "${!SERVICES[@]}"; do 
-  rm -rf "${ROOT}/${SERVICES[i]}/packages"
+  rm -rf "${SERVICES_ROOT}/${SERVICES[i]}/packages"
 done
 
+
+for i in "${!SERVICES[@]}"; do 
+  rm -rf "${APPS_ROOT}/${APPS[i]}/packages"
+done

@@ -34,7 +34,7 @@ class ActionButton extends React.Component {
             await sleep(200);
             this.setState({ bgColor: 'inherit' })
         })
-            .catch(async () => {
+            .catch(async (err) => {
                 this.setState({ bgColor: '#FF7F7F' })
                 await sleep(200);
                 this.setState({ bgColor: 'inherit' })

@@ -31,6 +31,12 @@ app.post('/api/clear', (req, res) => {
         .end()
 })
 
+app.post('/api/do', (req, res) => {
+    return res.status(201).
+        json({ status: 'ok!' })
+
+})
+
 app.get('/api/:method/:key', (req, res) => {
     const { method, key } = req.params;
     const value = mem[method][key]
@@ -51,8 +57,9 @@ app.post('/api/:method', (req, res) => {
     console.log(mem)
     return res.status(201).
         json({ value })
-
 })
+
+
 
 app.put('/api/:method/:key', (req, res) => {
     const { method, key } = req.params;

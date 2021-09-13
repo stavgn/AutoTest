@@ -17,9 +17,9 @@ class Queue {
     }
 
     exec(message) {
-        const { type = '', method = '', body = {} } = message
+        const { type = '', method = '', body = {}, params = {} } = message
         const handler = _.get(this.tasks, `${type.toLowerCase()}.${method.toLowerCase()}`, async () => { })
-        return handler(body)
+        return handler(body, params)
     }
     async attemptConnection() {
         const connection = await amqp.connect(`amqp://${this.queueUrl}`)

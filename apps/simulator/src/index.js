@@ -8,9 +8,9 @@ import AutoTest from '@autotest/client'
 import axios from 'axios'
 
 
-//const vcr = AutoTest.init('http://autotest.com');
-//vcr.record(axios)
-
+const vcr = AutoTest.init('http://localhost:4000/data');
+vcr.record(axios)
+window.vcr = vcr;
 ReactDOM.render(
   <React.StrictMode>
     <App />

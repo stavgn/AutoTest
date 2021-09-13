@@ -1,5 +1,14 @@
 version: "3.9"
-services: 
+networks:
+  local:
+    driver: bridge
+services:
+    simulator:
+    build: "./apps/simulator"
+    ports: 
+      - "3000:3000"
+    networks:
+      - local
   apigateway:
     build: "./services/ApiGateway"
     ports: 
@@ -48,7 +57,3 @@ services:
       - "15672:15672"
     networks:
       - local
-networks:
-  local:
-    driver: bridge
-  

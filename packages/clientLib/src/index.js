@@ -6,13 +6,13 @@ class AutoTest {
         this.axios = axios.create();
         this.user = user
         this.baseUrl = window && location.origin
-        this.startSession()
     }
 
     startSession() {
         this.session = mongoObjectId();
         this.createFlow()
-        setupTimers(this.startSession.bind(this), 4 * Math.pow(10, 4))
+        onInactive(this.startSession.bind(this), 4 * Math.pow(10, 4))
+        return this
     }
 
     createFlow() {
@@ -21,39 +21,79 @@ class AutoTest {
             'create',
             {
                 _id: this.session,
-                baseUrl: this.baseUrl
+                baseUrl: this.baseUrl,
+                user: this.user
             }
-        ))
+        )).catch(console.log)
+    }
+
+    createSequenceWithRequest(req) {
+        const _id = mongoObjectId();
+        this.axios.post(this.dataHook, this.envelope(
+            'sequence',
+            'create',
+            {
+                _id,
+                flowId: this.session,
+                location: window && location.pathname,
+                endpoint: req.url,
+                timestamp: new Date().getTime(),
+                request: req
+            }
+        )).catch(console.log)
+
+        req.headers['x-autotest-sequence-id'] = _id
+
+        return req
+    }
+
+    updateSequenceWithResponse(res) {
+        const seqeunceId = res.config.headers['x-autotest-sequence-id']
+        console.log({ seqeunceId })
+        this.axios.post(this.dataHook, this.envelope(
+            'sequence',
+            'update',
+            {
+                response: res
+            },
+            {
+                _id: seqeunceId
+            }
+        )).catch(console.log)
+
+        return res;
     }
 
     init(dataHook) {
         if (!localStorage.getItem('autotest_user_id')) {
             localStorage.setItem('autotest_user_id', mongoObjectId())
         }
-        return new AutoTest(dataHook, localStorage.getItem('autotest_user_id'));
+        return new AutoTest(dataHook, localStorage.getItem('autotest_user_id')).startSession()
     }
 
-    envelope(type, method, body) {
+    envelope(type, method, body, params) {
         return {
             type,
             method,
-            body
+            body,
+            params
         }
     }
 
-    handleRequest(req) {
-
+    handleRequest(...args) {
+        return this.createSequenceWithRequest(...args);
     }
 
-
-    handleResponse(res) {
-
+    handleResponse(...args) {
+        return this.updateSequenceWithResponse(...args);
     }
 
     record(axiosInstance) {
+        const req = this.handleRequest.bind(this);
+        const res = this.handleResponse.bind(this)
         if (axiosInstance && axiosInstance.interceptors) {
-            axiosInstance.interceptors.request.use(this.handleRequest.bind(this))
-            axiosInstance.interceptors.response.use(this.handleResponse.bind(this))
+            axiosInstance.interceptors.request.use(req, (...args) => Promise.reject(req(...args)))
+            axiosInstance.interceptors.response.use(res, (...args) => Promise.reject(res(...args)))
         }
     }
 
@@ -67,22 +107,13 @@ var mongoObjectId = function () {
 };
 
 
-function resetTimer(doInactive, timeoutInMiliseconds) {
-    return function (timeoutId) {
-        window.clearTimeout(timeoutId)
-        setTimeout(() => startTimer(doInactive, timeoutInMiliseconds), 0)
-    }
-}
+function onInactive(cb, ms) {
 
-function setupTimers(doInactive, timeoutInMiliseconds) {
-    let timerId
-    restTimerConfiged = resetTimer(doInactive, timeoutInMiliseconds)
-    document.addEventListener("mousemove", () => restTimerConfiged(timerId), false);
-    document.addEventListener("mousedown", () => restTimerConfiged(timerId), false);
-    document.addEventListener("keypress", () => restTimerConfiged(timerId), false);
-    document.addEventListener("touchmove", () => restTimerConfiged(timerId), false);
-
-    timerId = window.setTimeout(doInactive, timeoutInMiliseconds)
+    let wait = setTimeout(cb, ms);
+    document.onmousemove = document.mousedown = document.mouseup = document.onkeydown = document.onkeyup = document.focus = function () {
+        clearTimeout(wait);
+        wait = setTimeout(cb, ms);
+    };
 }
 
 export default new AutoTest()
