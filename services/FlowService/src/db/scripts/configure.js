@@ -18,7 +18,7 @@ export async function configure() {
         await client.connect();
         const db = client.db(dbName);
         await db.createCollection('flow', { validator: Flow })
-        await db.createCollection('seqeunce', { validator: Sequence })
+        await db.createCollection('sequence', { validator: Sequence })
         logger.info('MongoDb Successfully Configured!')
     }
     finally {

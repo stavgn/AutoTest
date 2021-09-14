@@ -48,8 +48,7 @@ class AutoTest {
     }
 
     updateSequenceWithResponse(res) {
-        const seqeunceId = res.config.headers['x-autotest-sequence-id']
-        console.log({ seqeunceId })
+        const sequenceId = res.config.headers['x-autotest-sequence-id']
         this.axios.post(this.dataHook, this.envelope(
             'sequence',
             'update',
@@ -57,10 +56,9 @@ class AutoTest {
                 response: res
             },
             {
-                _id: seqeunceId
+                _id: sequenceId
             }
         )).catch(console.log)
-
         return res;
     }
 

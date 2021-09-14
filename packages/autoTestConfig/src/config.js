@@ -1,5 +1,6 @@
 export default {
     default: {
+        APIGATEWAY_SERVICE: 'http://localhost:4000',
         FLOW_SERVICE: "http://localhost:8080",
         QUEUE_MNGR_SERVICE: "http://localhost:5000",
         QUEUE_URL: 'localhost',
@@ -12,7 +13,8 @@ export default {
         MONGO_CLUSTER_URL: 'mongodb:27017',
         FLOW_SERVICE: "http://flow:8080",
         QUEUE_MNGR_SERVICE: "http://queuemanager:5000",
-        QUEUE_URL: 'rabbitmq'
+        QUEUE_URL: 'rabbitmq',
+        APIGATEWAY_SERVICE: 'http://apigateway:4000'
 
     },
     production: {

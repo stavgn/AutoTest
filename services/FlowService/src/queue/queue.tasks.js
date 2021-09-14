@@ -4,7 +4,8 @@ import { createSequence, updateSequenceById } from '../services/sequence.service
 const tasks = {
     sequence: {
         create: createSequence,
-        update(body, params) { return updateSequenceById(params._id, body) }
+        update: (body, params) => updateSequenceById(params._id, body)
+
     },
     flow: {
         create: createFlow

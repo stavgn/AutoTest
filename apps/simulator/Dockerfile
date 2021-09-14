@@ -1,9 +1,10 @@
-FROM node:7.10
-WORKDIR /user/packages/clientLib
-COPY /packages/clientLib .
-WORKDIR /usr/src/app
+FROM node:14
+WORKDIR /user/packages/
+COPY /packages/ .
+WORKDIR /user/src/app
 COPY package*.json  ./
 RUN npm install
 COPY . ./
+RUN yarn build
 EXPOSE 3000
-RUN yarn start
+CMD yarn start:prod

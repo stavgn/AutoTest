@@ -28,8 +28,8 @@ Promise.all(routes).then((routes) => {
 app.get('/config', async (req, res) => {
     await mongoConfig()
     res.status(200)
-        .write("Success!")
-        .end()
+        .json({ configure: true })
+
 })
 
 app.listen(port, host, () => {

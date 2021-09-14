@@ -6,9 +6,9 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import AutoTest from '@autotest/client'
 import axios from 'axios'
+import autoTstConfig from '@autotest/config'
 
-
-const vcr = AutoTest.init('http://localhost:4000/data');
+const vcr = AutoTest.init(`${autoTstConfig.get('APIGATEWAY_SERVICE')}/data`);
 vcr.record(axios)
 window.vcr = vcr;
 ReactDOM.render(

@@ -1,7 +1,7 @@
 export default {
     $jsonSchema: {
         bsonType: "object",
-        required: ["sessionId", "location", "endpoint", "timestamp"],
+        required: ["flowId", "location", "endpoint", "timestamp"],
         properties: {
             flowId: {
                 bsonType: "objectId",
@@ -16,8 +16,8 @@ export default {
                 description: "must be a string and is required"
             },
             timestamp: {
-                bsonType: "timestamp",
-                description: "must be a timestamp and is required"
+                bsonType: "double",
+                description: "must be a double and is required"
             },
             request: {
                 bsonType: "object"

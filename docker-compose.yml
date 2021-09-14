@@ -3,7 +3,7 @@ networks:
   local:
     driver: bridge
 services:
-    simulator:
+  simulator:
     build: "./apps/simulator"
     ports: 
       - "3000:3000"
@@ -34,12 +34,12 @@ services:
       - QUEUE_URL=rabbitmq            
     networks:
       - local
-  simulatorbackend:
-    build: "./services/SimulatorBackendService" 
-    ports:
-      - "3001:3001"      
-    networks:
-      - local      
+  # simulatorbackend:
+  #   build: "./services/SimulatorBackendService" 
+  #   ports:
+  #     - "3001:3001"      
+  #   networks:
+  #     - local      
   queuemanager:
     build: "./services/queueManagerService" 
     ports:
