@@ -1,6 +1,6 @@
 {
     "name": "@autotest/client",
-    "version": "1.0.45",
+    "version": "1.0.46",
     "description": "",
     "type": "module",
     "main": "dist/index.js",
