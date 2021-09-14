@@ -91,7 +91,7 @@ class AutoTest {
         const res = this.handleResponse.bind(this)
         if (axiosInstance && axiosInstance.interceptors) {
             axiosInstance.interceptors.request.use(req, (...args) => Promise.reject(req(...args)))
-            axiosInstance.interceptors.response.use(res, (...args) => Promise.reject(res(...args)))
+            axiosInstance.interceptors.response.use(res, ({ response }) => Promise.reject(res(response)))
         }
     }
 

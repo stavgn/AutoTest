@@ -17,6 +17,7 @@ services:
       - local
     depends_on: 
       - 'flow'  
+      - 'queuemanager'
   mongodb:
     image: mongo
     ports: 
@@ -34,12 +35,12 @@ services:
       - QUEUE_URL=rabbitmq            
     networks:
       - local
-  # simulatorbackend:
-  #   build: "./services/SimulatorBackendService" 
-  #   ports:
-  #     - "3001:3001"      
-  #   networks:
-  #     - local      
+  simulatorbackend:
+    build: "./services/SimulatorBackendService" 
+    ports:
+      - "3001:3001"      
+    networks:
+      - local      
   queuemanager:
     build: "./services/queueManagerService" 
     ports:

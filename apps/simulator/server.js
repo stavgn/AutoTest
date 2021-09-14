@@ -40,7 +40,6 @@ app.post('/api/clear', (req, res) => {
 app.post('/api/do', (req, res) => {
     return res.status(201).
         json({ status: 'ok!' })
-
 })
 
 app.get('/api/:method/:key', (req, res) => {
@@ -77,8 +76,8 @@ app.put('/api/:method/:key', (req, res) => {
     }
     const value = calc[method.toLowerCase()](a, b)
     mem[method.toLowerCase()][key] = value;
-    return res.status(201).
-        json({ value })
+    return res.status(201)
+        .json({ value })
 })
 
 app.listen(port, host, () => {
